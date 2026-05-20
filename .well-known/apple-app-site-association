@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["695GNFL2MK.com.paololeonardi.ChangeMonitor"],
+        "components": [
+          { "/": "/watches" },
+          { "/": "/settings" },
+          { "/": "/settings/services" },
+          { "/": "/watch/*" }
+        ]
+      }
+    ]
+  }
+}

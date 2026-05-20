@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ChangeWatcher App — Monitor any webpage for changes</title>
+    <meta name="description" content="ChangeWatcher is the iOS app for changedetection.io. Connect one or more instances, monitor web pages for changes, view history with diffs, and manage your watches from your phone." />
+    <meta property="og:title" content="ChangeWatcher App — Monitor any webpage for changes" />
+    <meta property="og:description" content="ChangeWatcher is the iOS app for changedetection.io. Connect one or more instances, monitor web pages for changes, view history with diffs, and manage your watches from your phone." />
+    <meta property="og:url" content="https://changewatcher.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://changewatcher.app/images/app-preview.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --hero-bg: #0f172a;
+        --hero-text: #f8fafc;
+        --hero-muted: #94a3b8;
+        --accent: #38bdf8;
+        --accent-hover: #7dd3fc;
+        --accent-dark: #0ea5e9;
+        --section-bg: #f1f5f9;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text);
+        background-color: var(--section-bg);
+        -webkit-font-smoothing: antialiased;
+      }
+      .header-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        padding: 1.25rem 1.5rem;
+      }
+      @media (min-width: 600px) {
+        .header-wrap {
+          padding: 1.5rem 2rem;
+        }
+      }
+      header {
+        display: flex;
+        align-items: center;
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+        color: var(--hero-text);
+        text-decoration: none;
+      }
+      .logo:hover {
+        color: var(--accent);
+      }
+      nav {
+        display: flex;
+        gap: 1.25rem;
+      }
+      .hero {
+        padding: 5rem 1.5rem 2.5rem;
+        background: var(--hero-bg);
+        background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.15), transparent);
+      }
+      .hero-inner {
+        margin: 0 auto;
+        max-width: 64em;
+        text-align: center;
+      }
+      @media (min-width: 900px) {
+        .hero {
+          padding: 6rem 2rem 3rem;
+        }
+      }
+      .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero h1 {
+        margin: 0 0 0.25rem;
+        font-size: clamp(2rem, 5.5vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1.15;
+        color: var(--hero-text);
+      }
+      .hero .hero-with {
+        margin: 0 0 1rem;
+        font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        color: var(--hero-muted);
+      }
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero p {
+        margin: 0 0 1.5rem;
+        font-size: 1.125rem;
+        color: var(--hero-muted);
+        max-width: 28em;
+      }
+      .hero .sub {
+        font-size: 0.9375rem;
+        color: var(--hero-muted);
+        margin-bottom: 1.5rem;
+      }
+      .app-store-badge {
+        display: inline-block;
+        height: 44px;
+        transition: opacity 0.2s ease, transform 0.15s ease;
+      }
+      .app-store-badge:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+      .app-store-badge img {
+        height: 100%;
+        width: auto;
+        display: block;
+      }
+      .hero .app-store-badge {
+        height: 48px;
+      }
+      @media (min-width: 900px) {
+        .hero .app-store-badge {
+          height: 52px;
+        }
+      }
+      .hero-content a:not(.cta-primary) {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .hero-content a:not(.cta-primary):hover {
+        text-decoration: underline;
+      }
+      .hero-cta {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .hero-media {
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+        width: 100vw;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 10vw 1.5rem;
+        margin-bottom: 1.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 10vw;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .hero-media::-webkit-scrollbar {
+        display: none;
+      }
+      .hero-media .screenshot-wrap {
+        flex: 0 0 80vw;
+        scroll-snap-align: center;
+      }
+      .hero-media .screenshot-wrap.featured {
+        flex: 0 0 80vw;
+      }
+      @media (min-width: 600px) {
+        .hero-media {
+          position: static;
+          left: auto;
+          margin-left: auto;
+          margin-right: auto;
+          width: auto;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: 1.25rem;
+          padding: 0;
+          margin-bottom: 2rem;
+          overflow-x: visible;
+          scroll-snap-type: none;
+          scroll-padding: 0;
+        }
+        .hero-media .screenshot-wrap {
+          flex: unset;
+          max-width: 180px;
+          scroll-snap-align: unset;
+        }
+        .hero-media .screenshot-wrap.featured {
+          flex: unset;
+          max-width: 216px;
+        }
+        .hero-cta {
+          margin-bottom: 0;
+        }
+      }
+      @media (min-width: 900px) {
+        .hero-media {
+          gap: 1.5rem;
+          margin-bottom: 2.5rem;
+          align-items: flex-end;
+        }
+        .hero-media .screenshot-wrap {
+          max-width: 260px;
+        }
+        .hero-media .screenshot-wrap.featured {
+          max-width: 310px;
+        }
+      }
+      .hero-media .screenshot-wrap img {
+        width: 100%;
+        height: auto;
+        border-radius: 28px;
+        filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.4));
+      }
+      footer {
+        max-width: 64em;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 2rem;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      @media (min-width: 600px) {
+        footer {
+          padding: 1.5rem 2rem 2rem;
+        }
+      }
+      footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--accent);
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.25rem;
+        margin-bottom: 0;
+      }
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="68f62e4c-ba92-4743-97c3-9ade54b1fdd5"></script>
+  </head>
+  <body>
+    <header class="header-wrap">
+      <a class="logo" href="/">ChangeWatcher</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="hero-inner">
+        <div class="hero-content">
+          <h1 id="hero-heading">Monitor any webpage for changes</h1>
+          <p class="hero-with">with ChangeWatcher</p>
+          <p>
+            The iOS app for <a href="https://changedetection.io" target="_blank" rel="noopener noreferrer">changedetection.io</a>. Connect one or more changedetection.io instances, then see when sites change, view what changed with diffs, and manage all your watches in one place.
+          </p>
+        </div>
+        <div class="hero-media">
+          <div class="screenshot-wrap">
+            <img src="images/add-service.png" alt="Add your changedetection.io service" width="1320" height="2868" />
+          </div>
+          <div class="screenshot-wrap featured">
+            <img src="images/app-preview.png" alt="ChangeWatcher watch list on iPhone" width="1320" height="2868" />
+          </div>
+          <div class="screenshot-wrap">
+            <img src="images/diff.png" alt="ChangeWatcher watch history" width="1320" height="2868" />
+          </div>
+        </div>
+        <div class="hero-cta">
+          <a class="app-store-badge" href="https://apps.apple.com/us/app/changewatcher/id6739185519" aria-label="Download on the App Store" data-umami-event="download-click"><img src="images/app-store-badge.svg" alt="" width="135" height="40"></a>
+        </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-links">
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+      <p style="margin: 0;">&copy; <script>document.write(new Date().getFullYear())</script> <a href="https://paololeonardi.com">Paolo Leonardi</a></p>
+    </footer>
+  </body>
+</html>

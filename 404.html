@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ChangeWatcher</title>
+    <meta name="apple-itunes-app" content="app-id=6739185519" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --hero-bg: #0f172a;
+        --hero-text: #f8fafc;
+        --hero-muted: #94a3b8;
+        --accent: #38bdf8;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: var(--hero-bg);
+        background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.15), transparent);
+        color: var(--hero-text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      p {
+        margin: 0 0 2rem;
+        font-size: 1.125rem;
+        color: var(--hero-muted);
+        max-width: 24em;
+      }
+      .app-store-badge {
+        display: inline-block;
+        height: 48px;
+        margin-bottom: 2rem;
+        transition: opacity 0.2s ease, transform 0.15s ease;
+      }
+      .app-store-badge:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+      .app-store-badge img {
+        height: 100%;
+        width: auto;
+        display: block;
+      }
+      .home-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.9375rem;
+      }
+      .home-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="68f62e4c-ba92-4743-97c3-9ade54b1fdd5"></script>
+  </head>
+  <body>
+    <h1>ChangeWatcher</h1>
+    <p>Get the app to continue.</p>
+    <a class="app-store-badge" href="https://apps.apple.com/us/app/changewatcher/id6739185519" aria-label="Download on the App Store" data-umami-event="download-click">
+      <img src="/images/app-store-badge.svg" alt="" width="135" height="40" />
+    </a>
+    <a class="home-link" href="/">Learn more about ChangeWatcher</a>
+  </body>
+</html>
